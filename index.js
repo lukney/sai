@@ -56,7 +56,12 @@ app.get('/user', function (req, res) {
 	});
 });
 
-
+app.post('/users', function (req, res) {
+   connection.query('select * from user', function (error, results, fields) {
+	  if (error) throw error;
+	  res.end(JSON.stringify(results));
+	});
+});
 app.post('/insert', function (req, res) {
 	//get data
     var data = {
