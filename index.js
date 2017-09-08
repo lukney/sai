@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 //create app server
 var server = app.listen(3001,   function () {
 
-  var host = server.address().address
+  var host = 'ec2-18-221-18-150.us-east-2.compute.amazonaws.com'
   var port = server.address().port
 
   console.log("Example app listening at http://%s:%s", host, port)
