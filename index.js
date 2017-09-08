@@ -13,7 +13,10 @@ var connection = mysql.createConnection({
   port     : '3306'  
 });
 
-
+connection.connect(function(err) {
+  if (err) throw err
+  
+})
 //end mysql connection
 
 //start body-parser configuration
@@ -24,7 +27,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 //end body-parser configuration
 
 //create app server
-var server = app.listen(3001,   function () {
+var server = app.listen(3002,   function () {
 
   var host = 'ec2-18-221-18-150.us-east-2.compute.amazonaws.com'
   var port = server.address().port
