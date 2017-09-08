@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 //create app server
 var server = app.listen(3001,   function () {
 
-  var host = 'ec2-18-221-18-150.us-east-2.compute.amazonaws.com'
+  var host = server.address().address
   var port = server.address().port
 
   console.log("Example app listening at http://%s:%s", host, port)
@@ -37,9 +37,42 @@ var server = app.listen(3001,   function () {
 });
 
 //rest api to get all customers
-app.post('/customer', function (req, res) {
+app.get('/customer', function (req, res) {
    connection.query('select * from karnataka', function (error, results, fields) {
 	  if (error) throw error;
 	  res.end(JSON.stringify(results));
 	});
+});
+app.post('/customers', function (req, res) {
+   connection.query('select * from karnataka', function (error, results, fields) {
+	  if (error) throw error;
+	  res.end(JSON.stringify(results));
+	});
+});
+app.get('/user', function (req, res) {
+   connection.query('select * from user', function (error, results, fields) {
+	  if (error) throw error;
+	  res.end(JSON.stringify(results));
+	});
+});
+
+
+app.post('/insert', function (req, res) {
+	//get data
+    var data = {
+        name:req.body.name,
+        mobileno:req.body.mobileno,
+        emailid:req.body.emailid,
+		dob:req.body.dob
+     };
+   connection.query("INSERT INTO user set ? ",data, function(err, rows){
+
+           if(err){
+                console.log(err);
+                return next("Mysql error, check your query");
+           }
+
+          res.sendStatus(200);
+
+        });
 });
