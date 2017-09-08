@@ -37,9 +37,36 @@ var server = app.listen(3001,   function () {
 });
 
 //rest api to get all customers
-app.post('/customer', function (req, res) {
+app.get('/customer', function (req, res) {
    connection.query('select * from karnataka', function (error, results, fields) {
 	  if (error) throw error;
 	  res.end(JSON.stringify(results));
 	});
+});
+app.get('/user', function (req, res) {
+   connection.query('select * from user', function (error, results, fields) {
+	  if (error) throw error;
+	  res.end(JSON.stringify(results));
+	});
+});
+
+
+app.post('/insert', function (req, res) {
+	//get data
+    var data = {
+        name:req.body.name,
+        mobileno:req.body.mobileno,
+        emailid:req.body.emailid,
+		dob:req.body.dob
+     };
+   connection.query("INSERT INTO user set ? ",data, function(err, rows){
+
+           if(err){
+                console.log(err);
+                return next("Mysql error, check your query");
+           }
+
+          res.sendStatus(200);
+
+        });
 });
