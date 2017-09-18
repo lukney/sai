@@ -81,3 +81,31 @@ app.post('/insert', function (req, res) {
 
         });
 });
+app.post('/insertquery', function (req, res) {
+	//get data
+	
+     var or = req.body.origins;
+	  var patt1 = /[0-9]/g;
+	 var result = or.match(patt1);
+	 if(result){
+		var origins1= req.body.origins;
+		 //var origins1=req.body.origins;
+		// var array = string.split(",").map(Number);
+		connection.query("select pincode ,location from karnataka where pincode  like   ? ",   origins1 + '%',function (error, results,fields){
+	   if (error) throw error;
+	  res.end(JSON.stringify(results));
+  
+  })
+	}	 
+	 else if(or.search(/[^a-zA-Z]+/) === -1) {
+		 var origins2=or;
+ connection.query("select location,pincode from karnataka where location  like   ? ", origins2+'%' ,function (error, results,fields){
+	   if (error) throw error;
+	  res.end(JSON.stringify(results));
+  
+  })
+}
+	 
+	
+	
+});
